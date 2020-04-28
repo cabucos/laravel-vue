@@ -9,9 +9,9 @@ class Question extends Model
 {
     protected $fillable = ['title','body'];
 
-    public function setTitleAttributes($value){
+    public function setTitleAttribute($value){
 
-        return $this->attributes['title']  = $value;
+        $this->attributes['title']  = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
 
