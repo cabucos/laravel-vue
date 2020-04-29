@@ -24,7 +24,7 @@
                                 <strong>{{ $question->votes }}</strong> {{ str_plural('vote', $question->votes) }}
                             </div>
                             <div class="status {{ $question->status }}">
-                                <strong>{{ $question->answers }}</strong> {{ str_plural('answers', $question->answers) }}
+                                <strong>{{ $question->answers_count }}</strong> {{ str_plural('answers', $question->answers_count) }}
                             </div>
                             <div class="view">
                                 {{ $question->views . " " . str_plural('view', $question->views)}}
@@ -34,11 +34,11 @@
                             <div class="d-flex align-items-center">
                                 <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                 <div class="ml-auto">
-                                    @can('update-question', $question))
+                                    @can('update-question', $question)
                                     <a href="{{ route('question.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
                                     @endcan
 
-                                    @can('delete-question', $question))
+                                    @can('delete-question', $question)
                                     <form class="form-delete" method="post" action="{{ route('question.destroy', $question->id) }}">
                                         @method('DELETE')
                                         @csrf
