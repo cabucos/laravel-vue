@@ -41,8 +41,4 @@ class Question extends Model
         return "unanswered";
     }
 
-    public function getBodyHtmlAttribute(){
-
-        // return \ParseDown::instance()->text($this->body);
-    }
 }

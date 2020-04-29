@@ -10,6 +10,10 @@ use App\Http\Requests\AskQuestionRequest;
 
 class QuestionController extends Controller
 {
+
+    public function __contruct(){
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
     /**
      * Display a listing of the resource.
      *
