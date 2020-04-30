@@ -13,7 +13,7 @@ class Answer extends Model
 
     public function user(){
 
-        return $this->belonsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public static function boot(){
@@ -21,7 +21,7 @@ class Answer extends Model
         parent::boot();
 
         static::created(function($answer){
-            $answer->question->increment('answer_count');
+            $answer->question->increment('answers_count');
             $answer->question->save();
         });
 
@@ -29,4 +29,10 @@ class Answer extends Model
             echo "Answer saved";
         });
     }
+
+    public function getCreatedDateAttribute(){
+
+        return $this->created_at->diffForHumans();
+    }
+
 }

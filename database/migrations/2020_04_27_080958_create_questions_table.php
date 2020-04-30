@@ -32,8 +32,8 @@ class CreateQuestionsTable extends Migration
             $table->string('slug')->unique();
             $table->text('body');
             $table->unsignedInteger('views')->default(0);
-            $table->unsignedInteger('answers')->deafult(0);
-            $table->integer('votes')->deafult(0);
+            $table->unsignedInteger('answers_count')->default(0);
+            $table->integer('votes')->default(0);
             $table->unsignedInteger('best_answer_id')->nullable();
             $table->unsignedBigInteger('user_id');
 
