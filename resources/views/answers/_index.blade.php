@@ -13,12 +13,23 @@
                             <i class="fas fa-caret-up fa-3x"></i>
                         </a>
                         <span class="vote-count">1230</span>
-                        <a title="This answer is not useful" class="v te-down off">
+                        <a title="This answer is not useful" class="vote-down off">
                             <i class="fas fa-caret-down fa-3x"></i>
                         </a>
-                        <a title="Mark this as best answer (Click again to undo)" class="{{ $answer->status }} mt-2">
+                        @can ('accept', $answer)
+                        <a title="Mark this as best answer (Click again to undo)" class="{{ $answer->status }} mt-2" onClick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();">
                             <i class="fas fa-check fa-2x"></i>
                         </a>
+                        <form id="accept-answer-{{ $answer->id }}" action="{{ route('answer.accept', $answer->id)}}" method="POST" style="display:none;">
+                            @csrf
+                        </form>
+                        @else
+                            @if($answer->is_best)
+                                <a title="The question owner accepted this as best answer (Click again to undo)" class="{{ $answer->status }} mt-2" onClick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();">
+                                    <i class="fas fa-check fa-2x"></i>
+                                </a>
+                            @endif
+                        @endcan
                     </div>
                     <div class="media-body">
                         @parsedown ($answer->body)
