@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Question;
+use App\Answer;
 
 class User extends Authenticatable
 {
@@ -60,5 +61,30 @@ class User extends Authenticatable
         return $this->belongsToMany(Question::class, 'favorites')->withTimestamps();//, 'author_id', 'question_id');
     }
 
+    public function  voteQuestions(){
 
+        return $this->morphedByMany(Question::class, 'votable');
+    }
+
+    public function  voteAnswers(){
+
+        return $this->morphedByMany(Answer::class, 'votable');
+    }
+
+    public function voteQuestion(Question $question, $vote){
+
+        $voteQuestions = $this->voteQuestions();
+        if($voteQuestions->where('votable_id', $question->id)->first()){
+            $voteQuestions->updateExistingPivot($question, ['vote' => $vote]);
+        }else{
+            $voteQuestions->attach($question, ['vote' => $vote]);
+        }
+
+        $question->load('votes');
+        $downVotes = (int) $question->downVotes()->sum('vote');
+        $upVotes = (int) $question->upVotes()->sum('vote');
+
+        $question->votes_count = $upVotes + $downVotes;
+        $question->save();
+    }
 }
