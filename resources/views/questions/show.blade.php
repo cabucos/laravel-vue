@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -19,14 +18,14 @@
 
                     <div class="media">
                         @include ('shared._vote',[
-                            'model' => $question
+                        'model' => $question
                         ])
                         <div class="media-body">
-                            @parsedown ($question->body)
+                            @parsedown($question->body)
                             <div class="float-right">
                                 @include ('shared._author',[
-                                     'model' => $question
-                                    ,'label' => 'asked'
+                                'model' => $question
+                                ,'label' => 'asked'
                                 ])
                             </div>
                         </div>
