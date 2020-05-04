@@ -88,7 +88,7 @@ class User extends Authenticatable
     }
     private function _vote($relationship, $model, $vote){
 
-        if ($relationship->where('votable_id', $model->id)->first()) {
+        if ($relationship->where('votable_id', $model->id)->exists()) {
             $relationship->updateExistingPivot($model, ['vote' => $vote]);
         } else {
             $relationship->attach($model, ['vote' => $vote]);
