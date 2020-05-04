@@ -1,17 +1,17 @@
 @if($model instanceof App\Question )
-@php
-$name = 'question';
-$firstURISegment = 'question';
-@endphp
+    @php
+        $name = 'question';
+        $firstURISegment = 'question';
+    @endphp
 @elseif($model instanceof App\Answer )
-@php
-$name = 'answer';
-$firstURISegment = 'answer';
-@endphp
+    @php
+        $name = 'answer';
+        $firstURISegment = 'answer';
+    @endphp
 @endif
 @php
-$formId = $name ."-". $model->id;
-$formAction = "/{$firstURISegment}/{$model->id}/vote";
+    $formId = $name ."-". $model->id;
+    $formAction = "/{$firstURISegment}/{$model->id}/vote";
 @endphp
 <div class="d-flex flex-column vote-controls">
     <a title="This {{ $name }} is useful" class="vote-up {{ Auth::guest() ? 'off' : ''}}" onClick="event.preventDefault(); document.getElementById('up-vote-{{ $formId }}').submit();
@@ -31,13 +31,13 @@ $formAction = "/{$firstURISegment}/{$model->id}/vote";
     @csrf
     <input type="hidden" name="vote" value="-1">
 </form>
-@if (@model instanceof App\Question)
-@include ('shared._favorite',[
-'model' => $model
+@if ($model instanceof App\Question)
+    @include('shared._favorite',[
+    'model' => $model
 ])
 @elseif ($model instanceof App\Answer)
-@include ('shared._accept',[
-'model' => $model
+    @include('shared._accept',[
+    'model' => $model
 ])
 @endif
 </div>

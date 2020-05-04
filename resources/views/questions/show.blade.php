@@ -21,12 +21,9 @@
                         'model' => $question
                         ])
                         <div class="media-body">
-                            @parsedown($question->body)
+                            @parsedown ($question->body)
                             <div class="float-right">
-                                @include ('shared._author',[
-                                'model' => $question
-                                ,'label' => 'asked'
-                                ])
+                                <user-info :model="{{ $question }}" label="Asked"></user-info>
                             </div>
                         </div>
                     </div>
