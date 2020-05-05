@@ -9,7 +9,7 @@ class Answer extends Model
     use VotableTrait;
 
     protected $fillable = ['body', 'user_id'];
-    protected $appends = ['created_date'];
+    protected $appends = ['created_date', 'body_html'];
 
     public function question(){
 
@@ -57,4 +57,8 @@ class Answer extends Model
         return $this->morphToMany(User::class, 'votable');
     }
 
+    public function getBodyHtmlAttribute(){
+
+        return clean(@parsedown($this->body));
+    }
 }
