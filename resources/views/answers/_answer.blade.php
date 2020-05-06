@@ -21,7 +21,7 @@
                             @endcan
 
                             @can('delete', $answer)
-                                <button @click="Destroy" class="btn btn-sm btn-outline-danger" onClick="return confirm('Are you sure?')">Delete</button>
+                                <button @click.prevent="Destroy" class="btn btn-sm btn-outline-danger">Delete</button>
                             @endcan
                         </div>
                     </div>
