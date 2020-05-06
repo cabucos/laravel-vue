@@ -18,6 +18,7 @@ export default {
     props: ['answer'],
 
     data(){
+        // console.log(this.answer);
         return{
              isBest: this.answer.is_best
             ,id: this.answer.id
@@ -26,7 +27,7 @@ export default {
 
     computed:{
         canAccept(){
-            return true;
+            return this.authorize('accept', this.answer);
         },
 
         accepted(){
