@@ -1,0 +1,59 @@
+<template>
+    <div>
+        <a v-if="canAccept" title="Mark this as best answer (Click again to undo)"
+            :class="classes"
+            @click.prevent="Create"
+            >
+            <i class="fas fa-check fa-2x"></i>
+        </a>
+        <a v-if="accepted" title="The question owner accepted this as best answer (Click again to undo)"
+            :class="classes"
+            >
+            <i class="fas fa-check fa-2x"></i>
+        </a>
+    </div>
+</template>
+<script>
+export default {
+    props: ['answer'],
+
+    data(){
+        return{
+             isBest: this.answer.is_best
+            ,id: this.answer.id
+        }
+    },
+
+    computed:{
+        canAccept(){
+            return true;
+        },
+
+        accepted(){
+            return !this.canAccept && this.isBest
+        },
+
+        classes(){
+            return [
+                'mt-2'
+                ,this.isBest ? 'vote-accepted' : ''
+
+            ];
+        }
+    },
+
+    methods:{
+        Create(){
+            axios.post(`/answer/${this.id}/accept`)
+            .then(res =>{
+                this.$toast.success(res.data.message, "Success",{
+                     timeout: 3000
+                    ,position: 'topRight'
+                });
+
+                this.isBest = true;
+            })
+        }
+    }
+}
+</script>
