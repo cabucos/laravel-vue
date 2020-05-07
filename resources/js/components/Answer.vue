@@ -1,3 +1,32 @@
+<template>
+    <div class="media  post">
+        <vote :model="answer" name="answer"></vote>
+        <div class="media-body">
+            <form v-if="editing" @submit.prevent="Update">
+                <div class="form-group">
+                    <textarea rows="10" v-model="body" class="form-control" required></textarea>
+                </div>
+                <button class="btn btn-outline-primary btn-sm" :disabled="isInvalid">Update</button>
+                <button type="button" @click="Cancel" class="btn btn-outline-secondary btn-sm">Cancel</button>
+            </form>
+            <div v-else>
+                <div v-html="bodyHtml"></div>
+                <div clas="row">
+                    <div class="col-sm-4">
+                        <div class="ml-auto">
+                            <a v-if="authorize('modify', answer)" @click.prevent="Edit" class="btn btn-sm btn-outline-info">Edit</a>
+                            <button v-if="authorize('modify', answer)" @click.prevent="Destroy" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="float-right">
+                    <user-info :model="answer" label="Answered"></user-info>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
 <script>
 export default {
     props: ['answer'],
