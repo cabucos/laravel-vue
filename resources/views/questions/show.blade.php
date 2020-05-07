@@ -17,9 +17,7 @@
                     <hr>
 
                     <div class="media">
-                        @include ('shared._vote',[
-                        'model' => $question
-                        ])
+                        <vote :model="{{ $question }}" name="question"></vote>
                         <div class="media-body">
                             @parsedown ($question->body)
                             <div class="float-right">
