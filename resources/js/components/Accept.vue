@@ -1,8 +1,7 @@
 <template>
     <div>
         <a v-if="canAccept" title="Mark this as best answer (Click again to undo)"
-            :class="classes"
-            @click.prevent="Create"
+            :class="classes" @click.prevent="Create"
             >
             <i class="fas fa-check fa-2x"></i>
         </a>
@@ -14,6 +13,7 @@
     </div>
 </template>
 <script>
+import EventBus from '../event-bus';
 export default {
     props: ['answer'],
 
@@ -43,6 +43,12 @@ export default {
         }
     },
 
+    created(){
+        EventBus.$on('accepted', id =>{
+            this.isBest =( id === this.id);
+        })
+    },
+
     methods:{
         Create(){
             axios.post(`/answer/${this.id}/accept`)
@@ -53,6 +59,8 @@ export default {
                 });
 
                 this.isBest = true;
+
+                EventBus.$emit('accepted', this.id);
             })
         }
     }

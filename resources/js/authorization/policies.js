@@ -5,6 +5,6 @@ export default{
     },
 
     accept(user, answer){
-        return user.id === answer.question.usr_id;
+        return user.id === answer.question.user_id;
     }
 }
