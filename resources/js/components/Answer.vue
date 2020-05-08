@@ -28,8 +28,13 @@
     </div>
 </template>
 <script>
+import Vote from '../components/Vote.vue';
+import Answers from '../components/Answers.vue';
+
 export default {
     props: ['answer'],
+
+    components:{ Vote, Answers },
 
     data(){
         return {

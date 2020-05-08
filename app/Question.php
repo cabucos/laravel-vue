@@ -10,7 +10,7 @@ class Question extends Model
     use VotableTrait;
 
     protected $fillable = ['title','body'];
-    protected $appends = ['created_date', 'is_favorited', 'favorites_count'];
+    protected $appends = ['created_date', 'is_favorited', 'favorites_count', 'body_html'];
 
     public function setTitleAttribute($value){
 
@@ -78,6 +78,11 @@ class Question extends Model
     public function  votes(){
 
         return $this->morphToMany(User::class, 'votable');
+    }
+
+    public function getBodyHtmlAttribute(){
+
+        return clean(@parsedown($this->body));
     }
 
 }

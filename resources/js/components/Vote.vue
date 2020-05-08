@@ -33,7 +33,6 @@ export default {
     },
 
     data(){
-        console.log(this.model.votes_count, "test");
         return{
              count: this.model.votes_count || 0
             ,id: this.model.id
@@ -76,7 +75,6 @@ export default {
                      timeout: 3000
                     ,position: 'topRight'
                 });
-                console.log(res.data);
                 this.count = res.data.votesCount;
             })
         }
