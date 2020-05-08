@@ -29,17 +29,19 @@
 </template>
 <script>
 import Vote from '../components/Vote.vue';
-import Answers from '../components/Answers.vue';
+import UserInfo from '../components/UserInfo.vue';
+import modification from '../mixins/modification'
 
 export default {
     props: ['answer'],
 
-    components:{ Vote, Answers },
+    mixins:[modification],
+
+    components:{ Vote, UserInfo },
 
     data(){
         return {
-             editing: false
-            ,body: this.answer.body
+             body: this.answer.body
             ,bodyHtml: this.answer.body_html
             ,id: this.answer.id
             ,questionId: this.answer.question_id
@@ -47,58 +49,27 @@ export default {
         }
     },
     methods:{
-        Edit(){
+        setEditCache(){
             this.beforeEditCache = this.body;
-            this.editing = true;
         },
 
-        Cancel(){
+        restoreFromCache(){
             this.body = this.beforeEditCache;
-            this.editing = false;
         },
 
-        Update(){
-            axios.patch(this.endpoint,{
+        payload(){
+            return {
                 body: this.body
-            })
-            .then(res =>{
-                // console.log(res);
-                this.editing = false;
-                this.bodyHtml = res.data.body_html
-                this.$toast.success(res.data.message, "Success", { timeout: 3000});
-            })
-            .catch( err =>{
-                this.$toast.error(res.data.message, "Success", { timeout: 3000});
-            });
-
+            };
         },
-        Destroy(){
-            this.$toast.question('Are you sure about that ?', 'Confirm', {
-                timeout: 20000,
-                close: false,
-                overlay: true,
-                displayMode: 'once',
-                id: 'question',
-                zindex: 999,
-                title: 'Hey',
-                position: 'center',
-                buttons: [
-                    ['<button><b>YES</b></button>', (instance, toast) => {
-                        axios.delete(this.endpoint)
-                        .then( res => {
-                           this.$emit('deleted')
-                        });
-                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
 
-                    }, true],
-                    ['<button>NO</button>', function (instance, toast) {
-
-                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-                    }],
-                ],
+        delete(){
+            axios.delete(this.endpoint)
+            .then( (res) => {
+                this.$toast.success(res.data.message, "Success", {timeout: 2000});
+                this.$emit('deleted')
             });
-        },
+        }
     },
     computed:{
         isInvalid(){
