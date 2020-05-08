@@ -35,7 +35,7 @@ export default {
     data(){
         console.log(this.model.votes_count, "test");
         return{
-             count: this.model.votes_count
+             count: this.model.votes_count || 0
             ,id: this.model.id
         }
     },
